@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
 
@@ -15,6 +16,7 @@ const rateLimiter = require('./middleware/rateLimiter')
 //      next()
 //  })
 
+app.use(cors())
 app.use(express.json())//This middleware will parse the json bodies req.body
 app.use(rateLimiter)
 
