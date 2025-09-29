@@ -50,6 +50,7 @@ function NoteDetailPage(){
     try{
       await api.put(`/notes/${id}`,note)
       toast.success("Note updated successfully")
+      navigate("/")
     }catch(error){
       console.log("Error in saving note",error)
       toast.error("Failed to save note")
