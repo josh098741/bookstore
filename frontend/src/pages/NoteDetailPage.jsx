@@ -29,7 +29,30 @@ function NoteDetailPage(){
     fetchNote()
   },[id])
 
-  console.log({note})
+  const handleDelete = async () => {
+    if(!window.confirm("Are you sure you want  to delete this note")) return;
+    try{
+      await api.delete(`/notes/${id}`);
+      toast.success("Note deleted successfully");
+      navigate("/")
+    }catch(error){
+      console.log("Error in deleting the note",error);
+      toast.error("Failed to delete the note");
+    }
+  }
+
+  const handleSave = async () => {
+    setSaving(true);
+    try{
+      await api.put(`/notes/${id}`,note)
+      toast.success("Note updated successfully")
+    }catch(error){
+      console.log("Error in saving note",error)
+      toast.error("Failed to save note")
+    }finally{
+      setSaving(false)
+    }
+  }
 
   if(loading){
     return(
@@ -42,8 +65,42 @@ function NoteDetailPage(){
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <Link to="/" className=""
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+          <Link to="/" className="btn btn-ghost">
+            <ArrowLeftIcon className="h-5 w-5" />Back to Notes
+          </Link>
+          <button onClick={handleDelete} className="btn btn-error btn-outline">
+            <Trash2Icon className="h-5 w-5"/>Delete Note
+          </button>
+        </div>
+
+        <div className="card bg-base-100">
+          <div className="card-body">
+
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Title</span>
+              </label>
+              <input type="text" placeholder="Note Title" className="input input-bordered " value={note.title} onChange={(event) => setNote({...note, title: event.target.value})}/>
+            </div>
+
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Content</span>
+              </label>
+              <textarea placeholder="Write you note here" className="textarea textarea-bordered h-32" value={note.content} onChange={(event) => setNote({...note, content: event.target.value})}/>
+            </div>
+
+            <div className="card-actions justify-end ">
+              <button className="btn btn-primary" disabled={saving} onClick={handleSave}>
+                {saving ? "Saving...": "Save Changes"}
+              </button>
+            </div>
+
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
