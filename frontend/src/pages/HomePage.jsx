@@ -4,6 +4,7 @@ import RateLimitedUI from '../components/RateLimitedUI'
 import api from '../libs/axios'
 import toast from 'react-hot-toast'
 import NoteCard from '../components/NoteCard'
+import NotesNotFound from '../components/NotesNotFound'
 
 function HomePage(){
 
@@ -43,7 +44,7 @@ function HomePage(){
           loading && <div className="text-center text-primary py-10">Loading notes...</div>
         }
         {
-          notes.length === 0 && 
+          notes.length === 0 && !isRateLimited && <NotesNotFound />
         }
         {
           notes.length > 0 && !isRateLimited && (
