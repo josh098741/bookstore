@@ -3,10 +3,17 @@ const express = require('express')
 
 const app = express()
 
-app.use(express.json())
+app.use(express.json())//This middleware will parse the json bodies req.body
 
 const connectDB = require('./config/db')
 const notesRoutes = require('./routes/notesRoutes')
+
+//Simple custom middleware 
+
+//  app.use((req,res,next) => {
+//      console.log(`Req method is ${req.method} & Req URL ${req.url}`)
+//      next()
+//  })
 
 app.use("/api/notes",notesRoutes)
 
