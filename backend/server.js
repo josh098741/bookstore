@@ -2,21 +2,9 @@ const express = require('express')
 
 const app = express()
 
-app.get("/api/notes",(req,res) => {
-    res.status(200).send('You got  5 notes')
-})
+const notesRoutes = require('./routes/notesRoutes')
 
-app.post("/api/notes",(req,res) => {
-    res.status(201).json({message: "Created a post successfully"})
-})
-
-app.put("/api/notes/:id", (req,res) => {
-    res.status(200).json({message: "Note updated successfully"})
-})
-
-app.delete("/api/notes/:id",(req,res) => {
-    res.status(200).json({messaage: "Note deleted successfully"})
-})
+app.use("/api/notes",notesRoutes)
 
 app.listen(5001,() => {
     console.log('app listtening on port 5001')
