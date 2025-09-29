@@ -42,6 +42,10 @@ function NoteDetailPage(){
   }
 
   const handleSave = async () => {
+    if(!note.title.trim() || !note.content.trim()){
+      toast.error("Both fields need to be filled")
+      return;
+    }
     setSaving(true);
     try{
       await api.put(`/notes/${id}`,note)
