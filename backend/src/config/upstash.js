@@ -1,5 +1,5 @@
 require('dotenv').config()
-const {RateLimit, Analytics} = require('@upstash/ratelimit')
+const {Ratelimit, Analytics} = require('@upstash/ratelimit')
 const {Redis} = require('@upstash/redis')
 
 //Create Redis client using env vars
@@ -9,9 +9,9 @@ const redis = new Redis({
 })
 
 //Create a ratelimiter that allows 10 request per 20 seconds
-const ratelimit = new RateLimit({
+const ratelimit = new Ratelimit({
     redis,
-    limiter: RateLimit.slidingWindow(10, "20 s"),
+    limiter: Ratelimit.slidingWindow(100, "60 s"),
     Analytics: true
 })
 
