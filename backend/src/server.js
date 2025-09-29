@@ -3,6 +3,8 @@ const express = require('express')
 
 const app = express()
 
+app.use(express.json())
+
 const connectDB = require('./config/db')
 const notesRoutes = require('./routes/notesRoutes')
 
